@@ -39,3 +39,36 @@ dir.create("data", showWarnings = FALSE)
 write_csv(crime_subset, "data/crime_subset_10_lsoas.csv")
 saveRDS(crime_subset, "data/crime_subset_10_lsoas.rds")
 ```
+```{r}
+#import the unemployment dataset
+library(tidyr)
+
+# Load the sheet 
+path <- "C:/Users/tomma/OneDrive/a to be used Tommaso/Dauphine PSL/Data management and programming/Final project Sander Toto/Final project unemployment.csv"
+
+unemployment <- read_csv(path, col_names = FALSE)
+
+block <- unemployment[9:228, ]
+
+colnames(block) <- block[1, ]      # use row 1 as names
+block <- block[-1, ]               # remove header row
+
+block2 <- block %>%
+  separate(
+    col = 1,
+    into = c("local_authority", "mnemonic", paste0("v", 1:300)), 
+    sep = ",",
+    fill = "right"
+  )
+
+block2 <- block2 %>%
+  select(local_authority, mnemonic, where(~ any(!is.na(.x))))
+
+months <- c("Jan-22","Feb-22","Mar-22","Apr-22","May-22","Jun-22","Jul-22","Aug-22","Sep-22","Oct-22","Nov-22","Dec-22","Jan-23","Feb-23","Mar-23","Apr-23","May-23","Jun-23","Jul-23","Aug-23","Sep-23","Oct-23","Nov-23","Dec-23","Jan-24","Feb-24","Mar-24","Apr-24","May-24","Jun-24","Jun-24","Aug-24","Sep-24","Oct-24","Nov-24","Dec-24","Jan-25","Feb-25","Mar-25","Apr-25","May-25","Jun-25","Jul-25","Aug-25","Sep-25")
+
+names(block2)[3:(2 + length(months))] <- months
+
+
+
+```
+
