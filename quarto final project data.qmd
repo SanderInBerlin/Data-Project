@@ -1,0 +1,41 @@
+---
+title: "Quarto data projet final bogoss"
+author: "Tommaso Reali"
+format: html
+editor: visual
+---
+
+```{r}
+
+library(readxl)
+library(readr)
+
+path <- "C:/Users/tomma/OneDrive/a to be used Tommaso/Dauphine PSL/Data management and programming/Final project Sander Toto/crime_raw_full.csv"
+
+crime <- read_csv(path)
+
+
+#Filter the dataset to 10 english lsoa codes so Sander is able to see what it looks like #onsamusecommedespetitlapinsici
+
+library(dplyr)
+
+selected_lsoas <- c(
+  "E01000001",
+  "E01000002",
+  "E01000003",
+  "E01000004",
+  "E01000005",
+  "E01000006",
+  "E01000007",
+  "E01000008",
+  "E01000009",
+  "E01000010"
+)
+
+crime_subset <- crime %>%
+  filter(lsoa_code %in% selected_lsoas)
+
+dir.create("data", showWarnings = FALSE)
+write_csv(crime_subset, "data/crime_subset_10_lsoas.csv")
+saveRDS(crime_subset, "data/crime_subset_10_lsoas.rds")
+```
