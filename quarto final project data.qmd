@@ -68,7 +68,7 @@ months <- c("Jan-22","Feb-22","Mar-22","Apr-22","May-22","Jun-22","Jul-22","Aug-
 
 names(block2)[3:(2 + length(months))] <- months
 
-
+write_csv(block2, "data/unemployment_notfinished.csv")
 
 ```
 
